@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agente turístico</title>
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+  <div class="chat-container">
+    <header class="chat-header">
+      <h1>Agente turístico conversacional</h1>
+      <p>Tu asistente personal para planificar viajes</p>
+    </header>
+
+    <main id="chat-box" class="chat-box">
+      <!-- Mensaje inicial -->
+      <div class="message bot">
+        ¡Hola! Soy tu agente turístico. Antes de empezar, ingresa tus claves de <b>Groq</b> y <b>SerpAPI</b>.  
+        Después pregúntame por clima, costos, lugares o itinerarios indicando días y tema (arte, foodie, low-cost, familiar).
+      </div>
+    </main>
+
+    <!-- Formulario para API Keys -->
+    <form id="keys-form" class="chat-form">
+      <input type="text" id="groq-key" placeholder="Ingresa tu GROQ_API_KEY" required />
+      <input type="text" id="serp-key" placeholder="Ingresa tu SERPAPI_KEY" required />
+      <button type="submit">Guardar claves</button>
+    </form>
+
+    <!-- Formulario del chat -->
+    <form id="chat-form" class="chat-form" style="display:none;">
+      <input type="text" id="question" name="question" placeholder="Escribe tu pregunta de viaje..." required/>
+      <button type="submit">Enviar</button>
+    </form>
+
+    <footer class="chat-footer">
+      © 2025 Planificador de Viajes - Proyecto educativo
+    </footer>
+  </div>
+
+  <script src="/static/script.js"></script>
+  
+</body>
+</html>

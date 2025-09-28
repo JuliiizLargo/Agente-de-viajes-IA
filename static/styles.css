@@ -1,0 +1,271 @@
+/* Fuente  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #0f2a3b;
+  background: linear-gradient(180deg, #e6f0fa 0%, #dceaf8 100%);
+}
+
+
+.chat-container{
+  max-width: 1100px;     /* ancho desktop estilo chat */
+  margin: 0 auto;
+  padding: 18px 12px;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto; /* header / box / form / footer */
+  gap: 12px;
+  min-height: 100svh;     /* altura viewport móvil robusta */
+}
+
+/* ==================== HEADER ==================== */
+.chat-header{
+  background: #3498db;
+  color: #fff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.10);
+  position: sticky;
+  top: 8px;               /* queda “pegado” al hacer scroll largo */
+  z-index: 2;
+}
+.chat-header h1{
+  margin: 0 0 6px;
+  font-size: 1.6rem;
+}
+.chat-header p{
+  margin: 0;
+  font-size: .98rem;
+  opacity: .95;
+}
+
+/* ==================== CAJA DE CHAT ==================== */
+.chat-box{
+  overflow-y: auto;
+  background: #f7fbff;
+  border: 1px solid #d0e3f0;
+  border-radius: 14px;
+  padding: 16px 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06) inset;
+}
+
+/* Contenido centrado como “columna” de conversación */
+.message{
+  max-width: 780px;           /* ancho legible en escritorio */
+  margin: 10px auto;          /* centra mensajes en la columna */
+  padding: 12px 14px;
+  border-radius: 16px;
+  line-height: 1.45;
+  word-wrap: break-word;
+  font-size: 0.97rem;
+}
+
+/* Burbujas usuario/bot con contraste suave */
+.message.user{
+  background: #e7f3ff;
+  border: 1px solid #b9daf7;
+  color: #0f2a3b;
+  border-top-right-radius: 6px;
+}
+.message.bot{
+  background: #3498db;
+  color: #fff;
+  border: 1px solid #2f87c1;
+  border-top-left-radius: 6px;
+}
+
+
+.chat-form{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  background: #ecf5fc;
+  border: 1px solid #d0e3f0;
+  border-radius: 14px;
+  padding: 10px;
+  position: sticky;
+  bottom: 8px;               /* visible siempre en desktop */
+  z-index: 2;
+}
+.chat-form input{
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #c7d7e8;
+  background: #fff;
+  outline: none;
+  font-size: 1rem;
+  color: #103247;
+}
+.chat-form input::placeholder{ color: #7aaad0; }
+.chat-form button{
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 0;
+  background: #3498db;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s ease, transform .06s ease;
+}
+.chat-form button:hover{ background: #2c80b4; }
+.chat-form button:active{ transform: translateY(1px); }
+
+/* ==================== FOOTER ==================== */
+.chat-footer{
+  text-align: center;
+  font-size: .86rem;
+  color: #58768a;
+  padding: 6px 4px 12px;
+}
+
+
+.chat-box::-webkit-scrollbar{ width: 12px; }
+.chat-box::-webkit-scrollbar-track{
+  background: #eaf3fc;
+  border-radius: 10px;
+}
+.chat-box::-webkit-scrollbar-thumb{
+  background: #c8dff5;
+  border-radius: 10px;
+  border: 2px solid #eaf3fc;
+}
+.chat-box::-webkit-scrollbar-thumb:hover{ background: #b8d6f1; }
+
+/* Título de itinerario */
+.message.bot .itinerary-header{
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin: 6px 0 12px;
+  color: #eaf6ff;
+  letter-spacing: .2px;
+}
+
+/* Bloque “Incluye” tipo callout */
+.message.bot .itinerary-aside{
+  background: #f1f8ff;
+  color: #1f3b4d;
+  border: 1px solid #d5e9fb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin: 0 auto 14px;
+  max-width: 780px;          /* coincide con columna del chat */
+}
+.message.bot .itinerary-aside .aside-title{
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: #2c80b4;
+}
+.message.bot .itinerary-aside ul{
+  margin: 0; padding-left: 18px;
+}
+.message.bot .itinerary-aside li{ margin: 4px 0; }
+
+/* Grilla de tarjetas por día (responsive) */
+.message.bot .itinerary-grid{
+  display: grid;
+  gap: 14px;
+  margin: 0 auto;
+  max-width: 980px;          /* más ancho para la grilla */
+  grid-template-columns: 1fr;  /* móvil por defecto */
+}
+
+/* >= 640px: dos columnas (tablet) */
+@media (min-width: 640px){
+  .message.bot .itinerary-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* >= 1024px: tres columnas (escritorio) */
+@media (min-width: 1024px){
+  .message.bot .itinerary-grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Tarjeta de día */
+.message.bot .itinerary-card{
+  background: #ffffff;
+  color: #223042;
+  border: 1px solid #e2eef8;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 8px 18px rgba(15,42,59,.06);
+  transition: transform .1s ease, box-shadow .2s ease;
+}
+.message.bot .itinerary-card:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(15,42,59,.10);
+}
+
+/* Encabezado de cada día */
+.message.bot .itinerary-card h3{
+  margin: 2px 0 10px;
+  font-size: 1rem;
+  color: #2c80b4;
+  letter-spacing: .15px;
+}
+
+/* Filas Mañana/Tarde/Noche/Tip */
+.message.bot .itinerary-row{
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 6px 10px;
+  margin: 6px 0;
+  align-items: start;
+}
+.message.bot .itinerary-row .row-key{
+  color: #5b7ea0;
+  font-weight: 800;
+}
+.message.bot .itinerary-row .row-val{
+  color: #223042;
+}
+
+/* Nota/descargo al final */
+.message.bot .disclaimer{
+  margin: 14px auto 0;
+  max-width: 780px;
+  font-size: .92rem;
+  color: #eaf6ff;
+  opacity: .95;
+  border-left: 3px solid #cfe8ff;
+  padding-left: 10px;
+}
+
+/* Etiquetas (por si luego agregas chips de tema/destino) */
+.message.bot .chip{
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  background: #ffffff;
+  color: #2c80b4;
+  border: 1px solid #d5e9fb;
+  margin-right: 6px;
+}
+
+/* Tipografía dentro de respuestas del bot */
+.message.bot b, .message.bot strong{ color: #ffffff; }
+.message.bot i, .message.bot em{ color: #eef7ff; opacity: .95; }
+
+/* Enlaces dentro del bot */
+.message.bot a{ color: #fffb; text-decoration: underline; }
+.message.bot a:hover{ color: #fff; }
+
+/* ==================== ACCESIBILIDAD ALTO CONTRASTE ==================== */
+body.hc .chat-header{ background:#246a99; }
+body.hc .message.bot{ background:#246a99; }
+body.hc .message.bot .itinerary-card{ border-color:#c9def0; }
+
+/* ==================== AJUSTES RESPONSIVE EXTRA ==================== */
+@media (max-width: 768px){
+  .chat-container{ padding: 10px 8px; }
+  .message{ margin-left: 6px; margin-right: 6px; }
+}
