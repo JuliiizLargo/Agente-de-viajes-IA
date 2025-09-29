@@ -16,20 +16,13 @@
     <main id="chat-box" class="chat-box">
       <!-- Mensaje inicial -->
       <div class="message bot">
-        ¡Hola! Soy tu agente turístico. Antes de empezar, ingresa tus claves de <b>Groq</b> y <b>SerpAPI</b>.  
-        Después pregúntame por clima, costos, lugares o itinerarios indicando días y tema (arte, foodie, low-cost, familiar).
+        ¡Hola! Soy tu agente turístico.  
+        Puedes preguntarme por clima, costos, lugares o itinerarios indicando días y tema (arte, foodie, low-cost, familiar).
       </div>
     </main>
 
-    <!-- Formulario para API Keys -->
-    <form id="keys-form" class="chat-form">
-      <input type="text" id="groq-key" placeholder="Ingresa tu GROQ_API_KEY" required />
-      <input type="text" id="serp-key" placeholder="Ingresa tu SERPAPI_KEY" required />
-      <button type="submit">Guardar claves</button>
-    </form>
-
     <!-- Formulario del chat -->
-    <form id="chat-form" class="chat-form" style="display:none;">
+    <form id="chat-form" class="chat-form">
       <input type="text" id="question" name="question" placeholder="Escribe tu pregunta de viaje..." required/>
       <button type="submit">Enviar</button>
     </form>
@@ -42,4 +35,5 @@
   <script src="/static/script.js"></script>
 </body>
 </html>
+
 
