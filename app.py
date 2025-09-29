@@ -1,5 +1,6 @@
 import json
 import requests
+import os
 from flask import Flask, request, jsonify
 from groq import Groq
 
@@ -32,8 +33,6 @@ def guardrails(state):
 # ======================
 #   CLASIFICADOR
 # ======================
-
-
 def clasificador_llm(pregunta: str, groq_api_key: str) -> list[str]:
     prompt = """
     Clasifica la pregunta del usuario en una o varias de estas categorías:
@@ -46,7 +45,6 @@ def clasificador_llm(pregunta: str, groq_api_key: str) -> list[str]:
     Devuelve la respuesta estrictamente en formato JSON como lista de strings.
     Ejemplo: ["clima", "costos"]
     """
-
     groq_client = Groq(api_key=groq_api_key)
     response = groq_client.chat.completions.create(
         model="llama3-8b-8192",
@@ -56,9 +54,7 @@ def clasificador_llm(pregunta: str, groq_api_key: str) -> list[str]:
         ],
         temperature=0
     )
-
     raw = response.choices[0].message.content.strip()
-
     try:
         categorias = json.loads(raw)
         if isinstance(categorias, list):
@@ -73,12 +69,7 @@ def clasificador_llm(pregunta: str, groq_api_key: str) -> list[str]:
 # ======================
 def consultar_serpapi(query: str, tipo: str, serp_api_key: str) -> str:
     url = "https://serpapi.com/search"
-    params = {
-        "q": query,
-        "hl": "es",
-        "gl": "co",
-        "api_key": serp_api_key,
-    }
+    params = {"q": query, "hl": "es", "gl": "co", "api_key": serp_api_key}
     try:
         res = requests.get(url, params=params, timeout=10)
         data = res.json()
@@ -117,12 +108,17 @@ def generar_itinerario_groq(prompt: str, groq_api_key: str) -> str:
 # ======================
 #   GRAPH
 # ======================
-def run_graph(question: str, groq_api_key: str, serp_api_key: str):
+def run_graph(question: str):
     st = {"question": question}
     st = guardrails(st)
 
     if st["blocked"]:
         return st
+
+    groq_api_key = os.environ.get("GROQ_API_KEY")
+    serp_api_key = os.environ.get("SERP_API_KEY")
+    if not groq_api_key or not serp_api_key:
+        return {**st, "answer": "API keys no configuradas en el servidor."}
 
     categorias = clasificador_llm(st["question"], groq_api_key)
     respuestas = []
@@ -149,13 +145,7 @@ def run_graph(question: str, groq_api_key: str, serp_api_key: str):
 def ask():
     data = request.get_json()
     pregunta = data.get("question", "")
-    groq_api_key = data.get("groq_api_key", "")
-    serp_api_key = data.get("serp_api_key", "")
-
-    if not groq_api_key or not serp_api_key:
-        return jsonify({"error": "Faltan claves API"}), 400
-
-    result = run_graph(pregunta, groq_api_key, serp_api_key)
+    result = run_graph(pregunta)
     return jsonify(result)
 
 if __name__ == "__main__":
