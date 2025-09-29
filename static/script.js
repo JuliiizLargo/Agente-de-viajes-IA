@@ -160,8 +160,8 @@ formChat.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         question,
-        groq_key: GROQ_KEY,
-        serp_key: SERP_KEY
+        groq_api_key: GROQ_KEY,
+        serp_api_key: SERP_KEY
       })
     });
     if (!res.ok) throw new Error('Error del servidor');
